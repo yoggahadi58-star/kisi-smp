@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KISI-KISI PTS Informatika Kelas VII</title>
+    <style>
+        /* Mencegah seleksi teks (Anti Copy-Paste) */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        .container {
+            max-width: 750px;
+            background: #fff;
+            margin: auto;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .header h1, .header h2, .header h3 {
+            margin: 5px 0;
+        }
+        .progress {
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 15px;
+        }
+        .question-box {
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            background-color: #fafafa;
+            margin-bottom: 20px;
+        }
+        .question-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            white-space: pre-line;
+        }
+        .options {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .options li {
+            margin-bottom: 10px;
+        }
+        .options label {
+            display: block;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .options label:hover {
+            background-color: #e9ecef;
+        }
+        .options input[type="radio"] {
+            margin-right: 10px;
+        }
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        button:hover:not(:disabled) {
+            background-color: #0056b3;
+        }
+        .result-box {
+            text-align: center;
+            padding: 20px;
+        }
+        .score-display {
+            font-size: 3em;
+            font-weight: bold;
+            color: #28a745;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;" onkeydown="return disableShortcuts(event);">
+
+<div class="container">
+    <div class="header">
+        <h1>SMP REMAJA PLUIT</h1>
+        <h2>KISI-KISI PTS INFORMATIKA</h2>
+        <h3>Kelas: VII | Pembuat Soal: Yogga Hadi Sutisna, A.Md</h3>
+    </div>
+
+    <div id="quiz-body">
+        <div class="progress" id="progress-text">Soal 1 dari 25</div>
+        <div class="question-box">
+            <div class="question-title" id="question-text"></div>
+            <ul class="options" id="options-container"></ul>
+        </div>
+        <div class="nav-buttons">
+            <button id="prev-btn" onclick="prevQuestion()" disabled>Sebelumnya</button>
+            <button id="next-btn" onclick="nextQuestion()">Selanjutnya</button>
+        </div>
+    </div>
+
+    <div id="result-body" class="result-box" style="display: none;">
+        <h2>Kuis Selesai!</h2>
+        <p>Skor Akhir Anda:</p>
+        <div class="score-display" id="final-score">0</div>
+        <p id="score-summary"></p>
+        <br>
+        <button onclick="location.reload()">Ulangi Kuis</button>
+    </div>
+</div>
+
+<script>
+// Mencegah Tombol Klik Kanan & Shortcut Keyboard (Inspect Element, Copy, Paste)
+function disableShortcuts(e) {
+    if (e.keyCode === 123 || 
+       (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || 
+       (e.ctrlKey && (e.keyCode === 85 || e.keyCode === 83 || e.keyCode === 67))) {
+        return false;
+    }
+}
+
+// Data Seluruh Soal Pilihan Ganda (Termasuk 5 soal essai yang diubah ke PG)
+const rawQuestions = [
+    // --- 20 Soal Pilihan Ganda Asli ---
+    {
+        q: "informatika merupakan bidang ilmu komputer yang ada kaitannya dengan ....",
+        opts: ["data dan informasi", "proses perencanaan dan permodelan matematika", "permodelan matematika dan penggunaan komputer", "proses perencanaan, permodelan matematika, dan penggunaan komputer"],
+        ans: "data dan informasi"
+    },
+    {
+        q: "Tujuan informatika yaitu membentuk sebuah sistem komputasu yang di dalamnya terdapat ... untuk menyelesaikan masalah.",
+        opts: ["proses perancangan, pemodelan matematika, dan penggunaan komputer", "masalah keamanan jaringan", "masalah penggunaan software", "masalah pemrosesan data"],
+        ans: "proses perancangan, pemodelan matematika, dan penggunaan komputer"
+    },
+    {
+        q: "Aspek-aspek yang ada pada informasi antara lain",
+        opts: ["algoritma yang lebih efisien", "konsep dan struktur yang ada dalam sebuah informasi", "ilmu komputer dan proses mengelola data menajdi sebuah informasi", "benar semua"],
+        ans: "benar semua"
+    },
+    {
+        q: "Profesi yang tidak berhubungan dengan informatika yaitu",
+        opts: ["game developer", "konsultan IT", "web engineer", "bisnisman"],
+        ans: "bisnisman"
+    },
+    {
+        q: "Profesi lulusan Teknik Informatika (TI) yang khusus membuat program yaitu",
+        opts: ["programmer", "software engineer", "database engineer", "metode"],
+        ans: "programmer"
+    },
+    {
+        q: "Berikut merupakan kompetensi dari lulusan (SI)\n1. pemahaman dalam pengembangan dan juga maitenance sistem informasi\n2. pengembangan sistem informasi\n3. implementasi dan pembuatan sistem informasi\n4. memahami letak geografis suatu wilayah",
+        opts: ["1,2", "1,3,4", "3,4", "1,2,3"],
+        ans: "1,2,3"
+    },
+    {
+        q: "komponen yang biasa dimiliki oleh lulusan Teknik Informatika (TI) yaitu ...\n1. desian grafis dan desian program serta desain web\n2. program\n3. pengembangan dan pembuatan aplikasi atau software\n4. perangkat mesin pabrik dan alat berat",
+        opts: ["1,2", "1,2,3", "1,2,3,4", "2,3,4"],
+        ans: "1,2,3"
+    },
+    {
+        q: "apa sajakah manfaat teknologi bagi siswa ?\n1. komunikasi semakin mudah\n2. sumber informasi\n3. jejaring sosial\n4. membangkitkan semangat kerja",
+        opts: ["1,2", "1,2,3", "1,2,3,4", "2,3,4"],
+        ans: "1,2,3"
+    },
+    {
+        q: "Belajar semakin mudah, tukar pikiran, mendapat bahan dan ujian secara online merupakan salah satu manfaat teknologi digital untuk pendidikan siswa, yaitu\n1. jejaring sosial\n2. bangun kreativitas\n3. pembelajaran jarak jauh\n4. sumber informasi",
+        opts: ["1,2", "1,2,3", "1,2,3,4", "2,3,4"],
+        ans: "1,2,3,4"
+    },
+    {
+        q: "Microsoft PowerPoint digunakan untuk membuat",
+        opts: ["Dokumen teks", "Presentasi", "Perhitungan angka", "Database"],
+        ans: "Presentasi"
+    },
+    {
+        q: "Menu yang digunakan untuk menambahkan gambar ke dalam slide adalah",
+        opts: ["Home", "Insert", "Review", "View"],
+        ans: "Insert"
+    },
+    {
+        q: "Tombol yang digunakan untuk menjalankan presentasi dari slide pertama adalah",
+        opts: ["F5", "F1", "F10", "F12"],
+        ans: "F5"
+    },
+    {
+        q: "Efek gerakan pada objek seperti teks atau gambar disebut ....",
+        opts: ["Transition", "Animation", "Layout", "Theme"],
+        ans: "Animation"
+    },
+    {
+        q: "perintah untuk menyalin teks adalah",
+        opts: ["copy", "copi", "paste", "cut"],
+        ans: "copy"
+    },
+    {
+        q: "Untuk membuat teks menjadi miring digunakan tombol",
+        opts: ["underline", "italic", "bold", "left"],
+        ans: "italic"
+    },
+    {
+        q: "Microsoft Excel digunakan terutama untuk",
+        opts: ["Mengedit video", "Mengolah angka dan data", "Membuat animasi", "Mengedit suara"],
+        ans: "Mengolah angka dan data"
+    },
+    {
+        q: "Pertemuan antara baris dan kolom pada Excel disebut",
+        opts: ["Sheet", "Cell", "Workbook", "Formula"],
+        ans: "Cell"
+    },
+    {
+        q: "Kolom pada Microsoft Excel ditandai dengan",
+        opts: ["Angka", "Huruf", "Simbol", "Warna"],
+        ans: "Huruf"
+    },
+    {
+        q: "Baris pada Microsoft Excel ditandai dengan",
+        opts: ["Huruf", "Angka", "Simbol", "Rumus"],
+        ans: "Angka"
+    },
+    {
+        q: "Rumus pada Microsoft Excel selalu diawali dengan tanda",
+        opts: ["+", "-", "=", ":"],
+        ans: "="
+    },
+
+    // --- 5 Soal Essai yang Dikonversi Menjadi Pilihan Ganda ---
+    {
+        q: "Pengertian Microsoft PowerPoint beserta kegunaan utamanya yang paling tepat adalah ....",
+        opts: [
+            "Aplikasi pembuat presentasi untuk menyampaikan informasi secara visual menggunakan slide",
+            "Aplikasi pemroses kata untuk mengetik surat dan dokumen resmi",
+            "Software pengolah data angka dan grafik statistik",
+            "Program pembuat database jaringan berbasis cloud"
+        ],
+        ans: "Aplikasi pembuat presentasi untuk menyampaikan informasi secara visual menggunakan slide"
+    },
+    {
+        q: "Langkah-langkah yang tepat untuk menambahkan slide baru pada Microsoft PowerPoint adalah ....",
+        opts: [
+            "Klik tab Home -> pilih New Slide",
+            "Klik tab View -> pilih Zoom",
+            "Klik tab Insert -> pilih Chart",
+            "Klik File -> pilih Save As"
+        ],
+        ans: "Klik tab Home -> pilih New Slide"
+    },
+    {
+        q: "Perbedaan utama antara Animation dan Transition pada Microsoft PowerPoint adalah ....",
+        opts: [
+            "Animation digunakan untuk efek pada objek di dalam slide, sedangkan Transition untuk efek perpindahan antar slide",
+            "Animation untuk efek perpindahan slide, sedangkan Transition untuk efek pada teks",
+            "Animation untuk mengatur tata letak slide, sedangkan Transition untuk mengubah warna latar",
+            "Tidak ada perbedaan, keduanya berfungsi sama persis"
+        ],
+        ans: "Animation digunakan untuk efek pada objek di dalam slide, sedangkan Transition untuk efek perpindahan antar slide"
+    },
+    {
+        q: "Penjelasan yang tepat mengenai baris (row), kolom (column), dan sel (cell) pada Microsoft Excel adalah ....",
+        opts: [
+            "Row berbentuk horizontal (angka), Column berbentuk vertikal (huruf), dan Cell adalah pertemuan row & column",
+            "Row berbentuk vertikal (huruf), Column berbentuk horizontal (angka), dan Cell adalah lembar kerja",
+            "Row adalah rumus matematika, Column adalah nama dokumen, dan Cell adalah grafik",
+            "Row dan Column adalah sama, sedangkan Cell adalah kumpulan tombol toolbar"
+        ],
+        ans: "Row berbentuk horizontal (angka), Column berbentuk vertikal (huruf), dan Cell adalah pertemuan row & column"
+    },
+    {
+        q: "Langkah-langkah yang benar untuk menyimpan dokumen pada Microsoft Word adalah ....",
+        opts: [
+            "Klik menu File -> Save As -> Pilih lokasi -> Ketik nama file -> Klik Save",
+            "Klik Insert -> Table -> Ketik nama file -> Klik OK",
+            "Tekan tombol Alt + F4 -> Matikan komputer",
+            "Klik Home -> Cut -> Simpan ke folder"
+        ],
+        ans: "Klik menu File -> Save As -> Pilih lokasi -> Ketik nama file -> Klik Save"
+    }
+];
+
+let questions = [];
+let currentIndex = 0;
+let userAnswers = {};
+
+// Fungsi Acak Array (Fisher-Yates Shuffle)
+function shuffle(array) {
+    let arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+// Inisialisasi Kuis (Mengacak Soal & Opsi Jawaban)
+function initQuiz() {
+    let shuffledQ = shuffle(rawQuestions);
+    questions = shuffledQ.map(qObj => {
+        return {
+            q: qObj.q,
+            opts: shuffle(qObj.opts), // Acak opsi A, B, C, D
+            ans: qObj.ans
+        };
+    });
+    showQuestion();
+}
+
+// Tampilkan Soal
+function showQuestion() {
+    const q = questions[currentIndex];
+    document.getElementById("progress-text").innerText = `Soal ${currentIndex + 1} dari ${questions.length}`;
+    document.getElementById("question-text").innerText = `${currentIndex + 1}. ${q.q}`;
+
+    const optsContainer = document.getElementById("options-container");
+    optsContainer.innerHTML = "";
+
+    const labels = ['A', 'B', 'C', 'D'];
+    q.opts.forEach((opt, idx) => {
+        const isChecked = userAnswers[currentIndex] === opt ? "checked" : "";
+        optsContainer.innerHTML += `
+            <li>
+                <label>
+                    <input type="radio" name="option" value="${opt}" ${isChecked} onchange="saveAnswer('${opt}')">
+                    <b>${labels[idx]}.</b> ${opt}
+                </label>
+            </li>
+        `;
+    });
+
+    document.getElementById("prev-btn").disabled = currentIndex === 0;
+    
+    if (currentIndex === questions.length - 1) {
+        document.getElementById("next-btn").innerText = "Selesai & Lihat Skor";
+    } else {
+        document.getElementById("next-btn").innerText = "Selanjutnya";
+    }
+}
+
+// Simpan Jawaban
+function saveAnswer(selectedOpt) {
+    userAnswers[currentIndex] = selectedOpt;
+}
+
+// Navigasi Selanjutnya
+function nextQuestion() {
+    if (currentIndex < questions.length - 1) {
+        currentIndex++;
+        showQuestion();
+    } else {
+        calculateScore();
+    }
+}
+
+// Navigasi Sebelumnya
+function prevQuestion() {
+    if (currentIndex > 0) {
+        currentIndex--;
+        showQuestion();
+    }
+}
+
+// Hitung Skor Akhir
+function calculateScore() {
+    let correctCount = 0;
+
+    questions.forEach((q, idx) => {
+        if (userAnswers[idx] === q.ans) {
+            correctCount++;
+        }
+    });
+
+    const score = Math.round((correctCount / questions.length) * 100);
+
+    document.getElementById("quiz-body").style.display = "none";
+    document.getElementById("result-body").style.display = "block";
+    document.getElementById("final-score").innerText = score;
+    document.getElementById("score-summary").innerText = `Anda menjawab benar ${correctCount} dari ${questions.length} soal.`;
+}
+
+// Jalankan Kuis saat Halaman Dimuat
+document.addEventListener("DOMContentLoaded", initQuiz);
+</script>
+
+</body>
+</html>
