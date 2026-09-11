@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kisi-Kisi PTS Informatika Kelas IX</title>
+    <style>
+        /* Mencegah seleksi teks (Anti Copy-Paste) */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        .container {
+            max-width: 750px;
+            background: #fff;
+            margin: auto;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .header h1, .header h2, .header h3 {
+            margin: 5px 0;
+        }
+        .progress {
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 15px;
+        }
+        .question-box {
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            background-color: #fafafa;
+            margin-bottom: 20px;
+        }
+        .question-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            white-space: pre-line;
+        }
+        .options {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .options li {
+            margin-bottom: 10px;
+        }
+        .options label {
+            display: block;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .options label:hover {
+            background-color: #e9ecef;
+        }
+        .options input[type="radio"] {
+            margin-right: 10px;
+        }
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        button:hover:not(:disabled) {
+            background-color: #0056b3;
+        }
+        .result-box {
+            text-align: center;
+            padding: 20px;
+        }
+        .score-display {
+            font-size: 3em;
+            font-weight: bold;
+            color: #28a745;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;" onkeydown="return disableShortcuts(event);">
+
+<div class="container">
+    <div class="header">
+        <h1>SMP REMAJA PLUIT</h1>
+        <h2>Kisi-Kisi PTS SOAL INFORMATIKA</h2>
+        <h3>Kelas: IX | Pembuat Soal: Yogga Hadi Sutisna, A.Md</h3>
+    </div>
+
+    <div id="quiz-body">
+        <div class="progress" id="progress-text">Soal 1 dari 25</div>
+        <div class="question-box">
+            <div class="question-title" id="question-text"></div>
+            <ul class="options" id="options-container"></ul>
+        </div>
+        <div class="nav-buttons">
+            <button id="prev-btn" onclick="prevQuestion()" disabled>Sebelumnya</button>
+            <button id="next-btn" onclick="nextQuestion()">Selanjutnya</button>
+        </div>
+    </div>
+
+    <div id="result-body" class="result-box" style="display: none;">
+        <h2>Kuis Selesai!</h2>
+        <p>Skor Akhir Anda:</p>
+        <div class="score-display" id="final-score">0</div>
+        <p id="score-summary"></p>
+        <br>
+        <button onclick="location.reload()">Ulangi Kuis</button>
+    </div>
+</div>
+
+<script>
+// Mencegah Tombol Klik Kanan & Shortcut Keyboard (Inspect Element, Copy, Paste)
+function disableShortcuts(e) {
+    if (e.keyCode === 123 || 
+       (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || 
+       (e.ctrlKey && (e.keyCode === 85 || e.keyCode === 83 || e.keyCode === 67))) {
+        return false;
+    }
+}
+
+// Data Seluruh Soal Pilihan Ganda (Termasuk 5 soal essai yang diubah ke PG)
+const rawQuestions = [
+    // --- 20 Soal Pilihan Ganda Asli (Kelas IX) ---
+    {
+        q: "Pengertian yang benar tentang persoalan komputasional adalah",
+        opts: ["masalah yang berkaitan dengan penggunaan komputer", "masalah yang berkaitan dengan kompleksitas algoritma", "masalah yang terkait dengan keamanan komputer", "masalah yang berkaitan dengan penggunaan teknologi terbaru"],
+        ans: "masalah yang berkaitan dengan penggunaan komputer"
+    },
+    {
+        q: "contoh persoalan komputasioanl umum adalah",
+        opts: ["masalah traveling salesman", "masalah keamanan jaringan", "masalah penggunaan software", "masalah pemrosesan data"],
+        ans: "masalah traveling salesman"
+    },
+    {
+        q: "Hal yang tidak dikembangkan oleh peneliti untuk mengatasi persoalan komputasional adalah",
+        opts: ["mengubah cara berfikir", "algoritma yang lebih efisien", "optimasi performa komputer", "penggunaan teknologi terbaru komputasi pararel"],
+        ans: "mengubah cara berfikir"
+    },
+    {
+        q: "Berpikir komputasional adalah menyelesaikan persoalan dengan menerapkan teknik ...",
+        opts: ["ilmu komputer", "bahasa", "pemograman", "ilmu statistik"],
+        ans: "ilmu komputer"
+    },
+    {
+        q: "Berfikir komputasional dengan dasar dan batasan proses",
+        opts: ["komputasi", "kimiawi", "ilmiah", "metode"],
+        ans: "komputasi"
+    },
+    {
+        q: "... adalah informasi yang tersedia online untuk diunduh atau didistibusikan di media elektronik.",
+        opts: ["konten digital", "konten aplikasi", "pembuatan konten", "presentasi"],
+        ans: "konten digital"
+    },
+    {
+        q: "Banyak orang berpendapat bahwa konten online adalah segala sesuatu yang dapat ...",
+        opts: ["dipublikasikan", "difungsikan", "diperdebatkan", "diunggulkan"],
+        ans: "dipublikasikan"
+    },
+    {
+        q: "Sistem yang dilakukan oleh konten digital, yaitu",
+        opts: ["online", "ofline", "meeting", "group"],
+        ans: "online"
+    },
+    {
+        q: "Alasan yang tidak cocok bagi maraknya konten marketing di masa pandemi adalah",
+        opts: ["pengguna yang keseulitan mengakses konten", "hemat biaya", "penggunaan secara massal", "potensi upcycling"],
+        ans: "pengguna yang keseulitan mengakses konten"
+    },
+    {
+        q: "Peryataan yang tepat untuk infografis di atas yaitu",
+        opts: ["alasan yang cocok bagi konten marketing di masa pandemi", "kerumitan membuat konten", "desain konten", "mudah dibagikan"],
+        ans: "alasan yang cocok bagi konten marketing di masa pandemi"
+    },
+    {
+        q: "Microsoft Word digunakan untuk mengolah ....",
+        opts: ["Kata dan dokumen", "Gambar", "Video", "Musik"],
+        ans: "Kata dan dokumen"
+    },
+    {
+        q: "perintah untuk membuat tulisan menjadi tebal adalah",
+        opts: ["Bold", "Italic", "Underline", "tebal"],
+        ans: "Bold"
+    },
+    {
+        q: "perintah untuk menyimpan dokumen adalah",
+        opts: ["Save", "copy", "paste", "safe"],
+        ans: "Save"
+    },
+    {
+        q: "perintah untuk menyalin teks adalah",
+        opts: ["copy", "copi", "paste", "cut"],
+        ans: "copy"
+    },
+    {
+        q: "Untuk membuat teks menjadi miring digunakan tombol",
+        opts: ["italic", "underline", "bold", "left"],
+        ans: "italic"
+    },
+    {
+        q: "Microsoft Excel digunakan terutama untuk",
+        opts: ["Mengolah angka dan data", "Mengedit video", "Membuat animasi", "Mengedit suara"],
+        ans: "Mengolah angka dan data"
+    },
+    {
+        q: "Pertemuan antara baris dan kolom pada Excel disebut",
+        opts: ["Cell", "Sheet", "Workbook", "Formula"],
+        ans: "Cell"
+    },
+    {
+        q: "Kolom pada Microsoft Excel ditandai dengan ....",
+        opts: ["Huruf", "Angka", "Simbol", "Warna"],
+        ans: "Huruf"
+    },
+    {
+        q: "Baris pada Microsoft Excel ditandai dengan ....",
+        opts: ["Angka", "Huruf", "Simbol", "Rumus"],
+        ans: "Angka"
+    },
+    {
+        q: "Rumus pada Microsoft Excel selalu diawali dengan tanda",
+        opts: ["=", "+", "-", ":"],
+        ans: "="
+    },
+
+    // --- 5 Soal Essai Kelas IX yang Dikonversi Menjadi Pilihan Ganda ---
+    {
+        q: "Kegiatan utama dalam berpikir komputasional yaitu ....",
+        opts: [
+            "Memecahkan masalah (problem solving) secara logis dan sistematis",
+            "Menghafalkan kode program komputer",
+            "Membeli perangkat keras komputer terbaru",
+            "Menggambar grafik secara manual"
+        ],
+        ans: "Memecahkan masalah (problem solving) secara logis dan sistematis"
+    },
+    {
+        q: "Metode menyelesaikan persoalan dengan menerapkan teknik ilmu komputer disebut ....",
+        opts: [
+            "Berpikir Komputasional (Computational Thinking)",
+            "Pemrograman Berbasis Objek",
+            "Manajemen Basis Data",
+            "Sistem Informasi Geografis"
+        ],
+        ans: "Berpikir Komputasional (Computational Thinking)"
+    },
+    {
+        q: "CMS (Content Management System) juga terkenal akan fleksibilitasnya dalam ....",
+        opts: [
+            "Mengelola, mengedit, dan memublikasikan konten situs web tanpa coding rumit",
+            "Membuat perangkat keras komputer secara fisik",
+            "Meningkatkan kecepatan jaringan internet rumah",
+            "Menghitung rumus matematika secara otomatis"
+        ],
+        ans: "Mengelola, mengedit, dan memublikasikan konten situs web tanpa coding rumit"
+    },
+    {
+        q: "Rumus =MAX(A1:A5) digunakan untuk mencari ....",
+        opts: [
+            "Nilai tertinggi/terbesar dari kumpulan data sel A1 sampai A5",
+            "Nilai terendah dari kumpulan data sel A1 sampai A5",
+            "Nilai rata-rata dari kumpulan data sel A1 sampai A5",
+            "Jumlah keseluruhan data sel A1 sampai A5"
+        ],
+        ans: "Nilai tertinggi/terbesar dari kumpulan data sel A1 sampai A5"
+    },
+    {
+        q: "Rumus =AVERAGE(A1:A5) digunakan untuk mencari ....",
+        opts: [
+            "Nilai rata-rata dari kumpulan data sel A1 sampai A5",
+            "Nilai terbesar dari kumpulan data sel A1 sampai A5",
+            "Jumlah total dari kumpulan data sel A1 sampai A5",
+            "Banyaknya sel yang terisi angka dari A1 sampai A5"
+        ],
+        ans: "Nilai rata-rata dari kumpulan data sel A1 sampai A5"
+    }
+];
+
+let questions = [];
+let currentIndex = 0;
+let userAnswers = {};
+
+// Fungsi Acak Array (Fisher-Yates Shuffle)
+function shuffle(array) {
+    let arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+// Inisialisasi Kuis (Mengacak Soal & Opsi Jawaban)
+function initQuiz() {
+    let shuffledQ = shuffle(rawQuestions);
+    questions = shuffledQ.map(qObj => {
+        return {
+            q: qObj.q,
+            opts: shuffle(qObj.opts), // Acak opsi A, B, C, D
+            ans: qObj.ans
+        };
+    });
+    showQuestion();
+}
+
+// Tampilkan Soal
+function showQuestion() {
+    const q = questions[currentIndex];
+    document.getElementById("progress-text").innerText = `Soal ${currentIndex + 1} dari ${questions.length}`;
+    document.getElementById("question-text").innerText = `${currentIndex + 1}. ${q.q}`;
+
+    const optsContainer = document.getElementById("options-container");
+    optsContainer.innerHTML = "";
+
+    const labels = ['A', 'B', 'C', 'D'];
+    q.opts.forEach((opt, idx) => {
+        const isChecked = userAnswers[currentIndex] === opt ? "checked" : "";
+        optsContainer.innerHTML += `
+            <li>
+                <label>
+                    <input type="radio" name="option" value="${opt}" ${isChecked} onchange="saveAnswer('${opt}')">
+                    <b>${labels[idx]}.</b> ${opt}
+                </label>
+            </li>
+        `;
+    });
+
+    document.getElementById("prev-btn").disabled = currentIndex === 0;
+    
+    if (currentIndex === questions.length - 1) {
+        document.getElementById("next-btn").innerText = "Selesai & Lihat Skor";
+    } else {
+        document.getElementById("next-btn").innerText = "Selanjutnya";
+    }
+}
+
+// Simpan Jawaban
+function saveAnswer(selectedOpt) {
+    userAnswers[currentIndex] = selectedOpt;
+}
+
+// Navigasi Selanjutnya
+function nextQuestion() {
+    if (currentIndex < questions.length - 1) {
+        currentIndex++;
+        showQuestion();
+    } else {
+        calculateScore();
+    }
+}
+
+// Navigasi Sebelumnya
+function prevQuestion() {
+    if (currentIndex > 0) {
+        currentIndex--;
+        showQuestion();
+    }
+}
+
+// Hitung Skor Akhir
+function calculateScore() {
+    let correctCount = 0;
+
+    questions.forEach((q, idx) => {
+        if (userAnswers[idx] === q.ans) {
+            correctCount++;
+        }
+    });
+
+    const score = Math.round((correctCount / questions.length) * 100);
+
+    document.getElementById("quiz-body").style.display = "none";
+    document.getElementById("result-body").style.display = "block";
+    document.getElementById("final-score").innerText = score;
+    document.getElementById("score-summary").innerText = `Anda menjawab benar ${correctCount} dari ${questions.length} soal.`;
+}
+
+// Jalankan Kuis saat Halaman Dimuat
+document.addEventListener("DOMContentLoaded", initQuiz);
+</script>
+
+</body>
+</html>

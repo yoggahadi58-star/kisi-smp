@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kisi-Kisi PTS Informatika Kelas VIII</title>
+    <style>
+        /* Mencegah seleksi teks (Anti Copy-Paste) */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        .container {
+            max-width: 750px;
+            background: #fff;
+            margin: auto;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .header h1, .header h2, .header h3 {
+            margin: 5px 0;
+        }
+        .progress {
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 15px;
+        }
+        .question-box {
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            background-color: #fafafa;
+            margin-bottom: 20px;
+        }
+        .question-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            white-space: pre-line;
+        }
+        .options {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .options li {
+            margin-bottom: 10px;
+        }
+        .options label {
+            display: block;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .options label:hover {
+            background-color: #e9ecef;
+        }
+        .options input[type="radio"] {
+            margin-right: 10px;
+        }
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        button:hover:not(:disabled) {
+            background-color: #0056b3;
+        }
+        .result-box {
+            text-align: center;
+            padding: 20px;
+        }
+        .score-display {
+            font-size: 3em;
+            font-weight: bold;
+            color: #28a745;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;" onkeydown="return disableShortcuts(event);">
+
+<div class="container">
+    <div class="header">
+        <h1>SMP REMAJA PLUIT</h1>
+        <h2>Kisi-Kisi PTS INFORMATIKA</h2>
+        <h3>Kelas: VIII | Pembuat Soal: Yogga Hadi Sutisna, A.Md</h3>
+    </div>
+
+    <div id="quiz-body">
+        <div class="progress" id="progress-text">Soal 1 dari 25</div>
+        <div class="question-box">
+            <div class="question-title" id="question-text"></div>
+            <ul class="options" id="options-container"></ul>
+        </div>
+        <div class="nav-buttons">
+            <button id="prev-btn" onclick="prevQuestion()" disabled>Sebelumnya</button>
+            <button id="next-btn" onclick="nextQuestion()">Selanjutnya</button>
+        </div>
+    </div>
+
+    <div id="result-body" class="result-box" style="display: none;">
+        <h2>Kuis Selesai!</h2>
+        <p>Skor Akhir Anda:</p>
+        <div class="score-display" id="final-score">0</div>
+        <p id="score-summary"></p>
+        <br>
+        <button onclick="location.reload()">Ulangi Kuis</button>
+    </div>
+</div>
+
+<script>
+// Mencegah Tombol Klik Kanan & Shortcut Keyboard (Inspect Element, Copy, Paste)
+function disableShortcuts(e) {
+    if (e.keyCode === 123 || 
+       (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || 
+       (e.ctrlKey && (e.keyCode === 85 || e.keyCode === 83 || e.keyCode === 67))) {
+        return false;
+    }
+}
+
+// Data Seluruh Soal Pilihan Ganda (Termasuk 5 soal essai yang diubah ke PG)
+const rawQuestions = [
+    // --- 20 Soal Pilihan Ganda Asli (Kelas VIII) ---
+    {
+        q: "Fungsi memiliki berbagai macam definisi yang berbeda-beda. Definisi fungsi dalam pembelajaran matematika adalah",
+        opts: ["pemetaan antara dua himpunan yang memiliki pasangan", "hubungan antara dua bilangan", "pengumpulan data statistik", "masalah yang berkaitan dengan penggunaan teknologi terbaru"],
+        ans: "pemetaan antara dua himpunan yang memiliki pasangan"
+    },
+    {
+        q: "Fungsi computable dapat didefinisikan sebagai",
+        opts: ["Fungsi yang dapat di proses oleh komputer menggunakan algoritma", "Fungsi yang tidak dapat di proses oleh komputer", "Fungsi yang menghasilkan output tak terhingga", "fungsi masalah pemrosesan data"],
+        ans: "Fungsi yang dapat di proses oleh komputer menggunakan algoritma"
+    },
+    {
+        q: "Fungsi non-computable memiliki ciri utama berupa",
+        opts: ["tidak dapat dibuatkan algoritmanya", "Dapat di proses oleh logoritma", "optimasi performa komputer", "penggunaan teknologi terbaru komputasi pararel"],
+        ans: "tidak dapat dibuatkan algoritmanya"
+    },
+    {
+        q: "Pengertian fungsi secara umum dengan berfikir komputasional memiliki keterkatan yang cukup erat, keterkaitan tersebut yaitu dalam hal ...",
+        opts: ["fungsi membantu memahami apa yang dapat dan tidak dapat dikerjakan komputer", "Fungsi alat utama untuk menulis program", "fungsi utama digunakan untuk enyelesaikan masalah logika", "fungsi tidak memiliki hubungan langsung dengan komputasi"],
+        ans: "fungsi membantu memahami apa yang dapat dan tidak dapat dikerjakan komputer"
+    },
+    {
+        q: "Tujuan utama dari dekomposisi dalam metode atau cara memecahkan masalah adalah",
+        opts: ["memecahkan masalah kompleks menggunakan algoritma", "Fungsi hanya digunakan utuk meyelesikan masalah logika", "Fungsi yang tidak dapat diproses oleh komputer", "metode"],
+        ans: "memecahkan masalah kompleks menggunakan algoritma"
+    },
+    {
+        q: "Tujuan utama dari dekomposisi dalam metode atau cara memecahkan masalah adalah",
+        opts: ["memecahkan masalah komplek menjadi bagian kecil agar lebih mudah dipahami", "menggabungkan masalah menjadi satu kesatuan", "pembuatan konten", "meningkatkan kompleksitas algoritma"],
+        ans: "memecahkan masalah komplek menjadi bagian kecil agar lebih mudah dipahami"
+    },
+    {
+        q: "Fungsi non-computable tidak dapat diimplementasikan oleh komputer karena",
+        opts: ["Algoritma tidak dapat didefinikan", "membutuhkan perangkat keras yang mahal", "memerlukan pemrograman manual", "datanya terlalu besar untuk diproses"],
+        ans: "Algoritma tidak dapat didefinikan"
+    },
+    {
+        q: "Dalam konsep sebuah pemprogram komputer, output dapat didefinisikan sebagai",
+        opts: ["Hasil dri pemetaan antara input dan fungsi", "memasukan yag diberikan ke dalam fungsi", "proses algoritma yang belum selesai", "data yang belum diproses oleh fungsi"],
+        ans: "Hasil dri pemetaan antara input dan fungsi"
+    },
+    {
+        q: "Di bawah ini yang merupakan keunggulan utama dari penggunaan fungsi dalam pemrograman adalah",
+        opts: ["membantu dalam menysusun kode yang lebih terstruktur dan dapat digunakan kembali", "mengurangi penggunaan memori secara signifikan", "memperlambat eksekusi program agar lebih mudah dipantau", "menghilangkan kebutuhan akan variabel dalam program"],
+        ans: "membantu dalam menysusun kode yang lebih terstruktur dan dapat digunakan kembali"
+    },
+    {
+        q: "Dalam konteks dekomposisi, manakah dari berikut ini yang merupakan contoh implementasi yang baik?",
+        opts: ["menggunakan banyak fungsi kecil dengan tugas spesifik yang saling bekerja sama", "menulis seluruh kode program dalam satu fungsi utama tanpa pemecahkan", "membuat satu fungsi besar yang menangani semua tugas dalam problem", "pengguna yang kesulitan mengakses konten"],
+        ans: "menggunakan banyak fungsi kecil dengan tugas spesifik yang saling bekerja sama"
+    },
+    {
+        q: "Data dalam komputer direpresentasikan dalam bentuk",
+        opts: ["Bilangan biner", "Simbol dan huruf saja", "Video", "gambar saja"],
+        ans: "Bilangan biner"
+    },
+    {
+        q: "Angka 1 dan 0 dalam sistem biner digunakan karena",
+        opts: ["mencerminkan kondisi on/off rangkaian elektronik", "mudah dihitung manusia", "memiliki nilai yang sama dalam desimal", "dapat menampilkan warna lebih baik"],
+        ans: "mencerminkan kondisi on/off rangkaian elektronik"
+    },
+    {
+        q: "Format gambar vektor direpresentasikan menggunakan",
+        opts: ["Persamaan matematika, garis, dan bentuk", "nilai desimal saja", "teks dan kode angka", "petak piksel dengan ukuran tetap"],
+        ans: "Persamaan matematika, garis, dan bentuk"
+    },
+    {
+        q: "perintah untuk menyalin teks adalah",
+        opts: ["copy", "copi", "paste", "cut"],
+        ans: "copy"
+    },
+    {
+        q: "Untuk membuat teks menjadi miring digunakan tombol",
+        opts: ["italic", "underline", "bold", "left"],
+        ans: "italic"
+    },
+    {
+        q: "Microsoft Excel digunakan terutama untuk",
+        opts: ["Mengolah angka dan data", "Mengedit video", "Membuat animasi", "Mengedit suara"],
+        ans: "Mengolah angka dan data"
+    },
+    {
+        q: "Pertemuan antara baris dan kolom pada Excel disebut",
+        opts: ["Cell", "Sheet", "Workbook", "Formula"],
+        ans: "Cell"
+    },
+    {
+        q: "Kolom pada Microsoft Excel ditandai dengan",
+        opts: ["Huruf", "Angka", "Simbol", "Warna"],
+        ans: "Huruf"
+    },
+    {
+        q: "Baris pada Microsoft Excel ditandai dengan",
+        opts: ["Angka", "Huruf", "Simbol", "Rumus"],
+        ans: "Angka"
+    },
+    {
+        q: "Rumus pada Microsoft Excel selalu diawali dengan tanda",
+        opts: ["=", "+", "-", ":"],
+        ans: "="
+    },
+
+    // --- 5 Soal Essai Kelas VIII yang Dikonversi Menjadi Pilihan Ganda ---
+    {
+        q: "Tahapan berpikir komputasional untuk memecahkan masalah menjadi bagian-bagian kecil disebut ....",
+        opts: ["Dekomposisi", "Pengenalan Pola", "Abstraksi", "Algoritma"],
+        ans: "Dekomposisi"
+    },
+    {
+        q: "Menemukan pola yang berulang dalam sebuah masalah merupakan langkah ....",
+        opts: ["Pengenalan Pola (Pattern Recognition)", "Dekomposisi", "Abstraksi", "Pengkodean (Coding)"],
+        ans: "Pengenalan Pola (Pattern Recognition)"
+    },
+    {
+        q: "Proses menyederhanakan masalah kompleks menjadi lebih mudah dengan fokus pada hal penting saja disebut ....",
+        opts: ["Abstraksi", "Dekomposisi", "Algoritma", "Evaluasi"],
+        ans: "Abstraksi"
+    },
+    {
+        q: "Rumus =MAX(A1:A5) pada Microsoft Excel digunakan untuk mencari ....",
+        opts: ["Nilai tertinggi/terbesar dari sel A1 sampai A5", "Nilai terendah dari sel A1 sampai A5", "Nilai rata-rata dari sel A1 sampai A5", "Jumlah total sel A1 sampai A5"],
+        ans: "Nilai tertinggi/terbesar dari sel A1 sampai A5"
+    },
+    {
+        q: "Rumus =AVERAGE(A1:A5) pada Microsoft Excel digunakan untuk mencari ....",
+        opts: ["Nilai rata-rata dari sel A1 sampai A5", "Nilai tertinggi dari sel A1 sampai A5", "Jumlah seluruh angka dari sel A1 sampai A5", "Banyaknya sel yang berisi data"],
+        ans: "Nilai rata-rata dari sel A1 sampai A5"
+    }
+];
+
+let questions = [];
+let currentIndex = 0;
+let userAnswers = {};
+
+// Fungsi Acak Array (Fisher-Yates Shuffle)
+function shuffle(array) {
+    let arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+// Inisialisasi Kuis (Mengacak Soal & Opsi Jawaban)
+function initQuiz() {
+    let shuffledQ = shuffle(rawQuestions);
+    questions = shuffledQ.map(qObj => {
+        return {
+            q: qObj.q,
+            opts: shuffle(qObj.opts), // Acak opsi A, B, C, D
+            ans: qObj.ans
+        };
+    });
+    showQuestion();
+}
+
+// Tampilkan Soal
+function showQuestion() {
+    const q = questions[currentIndex];
+    document.getElementById("progress-text").innerText = `Soal ${currentIndex + 1} dari ${questions.length}`;
+    document.getElementById("question-text").innerText = `${currentIndex + 1}. ${q.q}`;
+
+    const optsContainer = document.getElementById("options-container");
+    optsContainer.innerHTML = "";
+
+    const labels = ['A', 'B', 'C', 'D'];
+    q.opts.forEach((opt, idx) => {
+        const isChecked = userAnswers[currentIndex] === opt ? "checked" : "";
+        optsContainer.innerHTML += `
+            <li>
+                <label>
+                    <input type="radio" name="option" value="${opt}" ${isChecked} onchange="saveAnswer('${opt}')">
+                    <b>${labels[idx]}.</b> ${opt}
+                </label>
+            </li>
+        `;
+    });
+
+    document.getElementById("prev-btn").disabled = currentIndex === 0;
+    
+    if (currentIndex === questions.length - 1) {
+        document.getElementById("next-btn").innerText = "Selesai & Lihat Skor";
+    } else {
+        document.getElementById("next-btn").innerText = "Selanjutnya";
+    }
+}
+
+// Simpan Jawaban
+function saveAnswer(selectedOpt) {
+    userAnswers[currentIndex] = selectedOpt;
+}
+
+// Navigasi Selanjutnya
+function nextQuestion() {
+    if (currentIndex < questions.length - 1) {
+        currentIndex++;
+        showQuestion();
+    } else {
+        calculateScore();
+    }
+}
+
+// Navigasi Sebelumnya
+function prevQuestion() {
+    if (currentIndex > 0) {
+        currentIndex--;
+        showQuestion();
+    }
+}
+
+// Hitung Skor Akhir
+function calculateScore() {
+    let correctCount = 0;
+
+    questions.forEach((q, idx) => {
+        if (userAnswers[idx] === q.ans) {
+            correctCount++;
+        }
+    });
+
+    const score = Math.round((correctCount / questions.length) * 100);
+
+    document.getElementById("quiz-body").style.display = "none";
+    document.getElementById("result-body").style.display = "block";
+    document.getElementById("final-score").innerText = score;
+    document.getElementById("score-summary").innerText = `Anda menjawab benar ${correctCount} dari ${questions.length} soal.`;
+}
+
+// Jalankan Kuis saat Halaman Dimuat
+document.addEventListener("DOMContentLoaded", initQuiz);
+</script>
+
+</body>
+</html>
