@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kisi-Kisi PAS Ganjil - Informatika (Kelas VII SMP)</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #2563eb;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-body: #f3f4f6;
+            --border: #e5e7eb;
+        }
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-body);
+            margin: 0;
+            padding: 20px;
+            color: var(--text-dark);
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 820px;
+            background: #ffffff;
+            margin: auto;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+        /* Kop Surat Sekolah */
+        .kop-surat {
+            text-align: center;
+            border-bottom: 3px double #111827;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .kop-surat .yayasan {
+            font-size: 0.9em;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+        .kop-surat h1 {
+            margin: 4px 0;
+            font-size: 1.5em;
+            color: var(--primary);
+            letter-spacing: 0.5px;
+        }
+        .kop-surat h2 {
+            margin: 2px 0;
+            font-size: 1.15em;
+            font-weight: 700;
+        }
+        .kop-surat .tahun {
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+        .meta-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 0.92em;
+            background-color: #f9fafb;
+            border: 1px solid var(--border);
+        }
+        .meta-table td {
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+        }
+        .meta-table td:nth-child(odd) {
+            font-weight: 600;
+            width: 18%;
+            background-color: #f3f4f6;
+        }
+        .meta-table td:nth-child(even) {
+            width: 32%;
+        }
+
+        /* Form Identitas */
+        .identity-card {
+            background: var(--primary-light);
+            border: 1px solid #bfdbfe;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .identity-card h3 {
+            margin-top: 0;
+            color: var(--primary);
+            font-size: 1.1em;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        @media (max-width: 600px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.9em;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 0.95em;
+        }
+        .petunjuk {
+            font-size: 0.88em;
+            background: #fff;
+            padding: 12px 15px;
+            border-radius: 6px;
+            border-left: 4px solid var(--accent);
+            margin-bottom: 15px;
+        }
+        .petunjuk ol {
+            margin: 5px 0 0 0;
+            padding-left: 20px;
+        }
+
+        /* Progress & Navigasi Nomor */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Kotak Soal */
+        .question-box {
+            padding: 20px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background-color: #ffffff;
+            margin-bottom: 20px;
+        }
+        .badge-tipe {
+            display: inline-block;
+            font-size: 0.78em;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background-color: #dbeafe;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        .question-title {
+            font-size: 1.05em;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        .code-block {
+            background-color: #f1f5f9;
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            color: #0f172a;
+            border: 1px solid #cbd5e1;
+        }
+        .options {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 0;
+        }
+        .options li {
+            margin-bottom: 10px;
+        }
+        .options label {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .options label:hover {
+            background-color: #f8fafc;
+            border-color: var(--accent);
+        }
+        .options input[type="radio"] {
+            margin-top: 4px;
+            margin-right: 12px;
+            accent-color: var(--accent);
+        }
+
+        /* Tombol */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .btn {
+            padding: 10px 22px;
+            font-size: 0.95em;
+            font-weight: 600;
+            border: none;
+            border-radius: 6px;
+            background-color: var(--accent);
+            color: white;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn:disabled {
+            background-color: #cbd5e1;
+            cursor: not-allowed;
+        }
+        .btn:hover:not(:disabled) {
+            background-color: var(--primary);
+        }
+        .btn-success {
+            background-color: var(--success);
+        }
+        .btn-success:hover {
+            background-color: #15803d;
+        }
+
+        /* Hasil & Pembahasan */
+        .result-box {
+            text-align: center;
+            padding: 10px 0;
+        }
+        .score-card {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0 25px 0;
+        }
+        .score-display {
+            font-size: 3.2em;
+            font-weight: 800;
+            color: var(--success);
+            margin: 5px 0;
+        }
+        .kktp-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 700;
+        }
+        /* Kotak Pesan / Konfirmasi Custom (Pengganti alert & confirm) */
+        .alert-banner {
+            display: none;
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 0.92em;
+            font-weight: 500;
+            background-color: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+        .confirm-modal-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.55);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .confirm-modal {
+            background: #fff;
+            max-width: 420px;
+            width: 100%;
+            padding: 22px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+        .confirm-modal h4 {
+            margin: 0 0 10px 0;
+            color: var(--primary);
+            font-size: 1.15em;
+        }
+        .confirm-modal p {
+            margin: 0 0 20px 0;
+            font-size: 0.95em;
+            color: var(--text-dark);
+        }
+        .confirm-actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .btn-secondary {
+            background-color: #6b7280;
+        }
+        .btn-secondary:hover {
+            background-color: #4b5563;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Kop Surat -->
+    <div class="kop-surat">
+        <div class="yayasan">YAYASAN PENDIDIKAN NASIONAL</div>
+        <h1>SMP REMAJA PLUIT</h1>
+        <h2>KISI-KISI PAS GANJIL</h2>
+        <div class="tahun">TAHUN AJARAN 2026 - 2027</div>
+    </div>
+
+    <table class="meta-table">
+        <tr>
+            <td>Mata Pelajaran</td>
+            <td>: INFORMATIKA</td>
+            <td>Nama Guru</td>
+            <td>: Yogga Hadi Sutisna, A.Md</td>
+        </tr>
+        <tr>
+            <td>Jenjang / Kelas</td>
+            <td>: SMP - VII (Semua)</td>
+            <td>Alokasi Waktu</td>
+            <td>: 90 Menit (KKTP: 75)</td>
+        </tr>
+    </table>
+
+    <!-- Tahap 1: Identitas Peserta -->
+    <div id="start-screen" class="identity-card">
+        <h3>Identitas Peserta Ujian</h3>
+        <div id="form-alert" class="alert-banner"></div>
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="student-name">Nama Lengkap *</label>
+                <input type="text" id="student-name" placeholder="Masukkan nama lengkap Anda...">
+            </div>
+            <div class="form-group">
+                <label for="student-class">Kelas *</label>
+                <input type="text" id="student-class" placeholder="Contoh: VII A / VII B">
+            </div>
+        </div>
+        <div class="petunjuk">
+            <strong>PETUNJUK UMUM:</strong>
+            <ol>
+                <li>Berdoalah sebelum mulai mengerjakan naskah soal latihan/ujian.</li>
+                <li>Kisi-kisi ini terdiri dari <strong>45 soal Pilihan Ganda</strong> (40 PG + 5 Essai konversi) yang diacak secara otomatis.</li>
+                <li>Periksa dan bacalah soal-soal dengan teliti sebelum menjawab.</li>
+                <li>Dahulukan menjawab soal-soal yang dianggap paling mudah.</li>
+            </ol>
+        </div>
+        <button class="btn" onclick="startExam()">Mulai Mengerjakan</button>
+    </div>
+
+    <!-- Tahap 2: Area Ujian -->
+    <div id="quiz-body" style="display: none;">
+        <div class="top-bar">
+            <span id="student-badge">Peserta: -</span>
+            <span id="progress-text">Soal 1 dari 45</span>
+        </div>
+
+        <div class="question-box">
+            <div class="question-title" id="question-text"></div>
+            <div id="answer-area"></div>
+        </div>
+
+        <div class="nav-buttons">
+            <button class="btn" id="prev-btn" onclick="prevQuestion()" disabled>Sebelumnya</button>
+            <button class="btn" id="next-btn" onclick="nextQuestion()">Selanjutnya</button>
+        </div>
+    </div>
+
+    <!-- Tahap 3: Hasil Nilai -->
+    <div id="result-body" class="result-box" style="display: none;">
+        <h2>Kuis Selesai!</h2>
+        <p id="result-student-info" style="font-weight: 600; color: var(--text-muted);"></p>
+
+        <div class="score-card">
+            <div>Nilai Akhir Anda:</div>
+            <div class="score-display" id="final-score">0</div>
+            <div id="kktp-status" class="kktp-badge"></div>
+            <p id="score-summary" style="margin-bottom: 0; font-size: 0.95em;"></p>
+        </div>
+
+        <button class="btn" onclick="restartExam()">Kembali Mulai Mengerjakan</button>
+    </div>
+</div>
+
+<!-- Modal Konfirmasi Selesai Ujian -->
+<div id="confirm-modal-backdrop" class="confirm-modal-backdrop">
+    <div class="confirm-modal">
+        <h4>Konfirmasi Pengumpulan</h4>
+        <p id="confirm-modal-text">Apakah Anda yakin ingin mengumpulkan ujian sekarang?</p>
+        <div class="confirm-actions">
+            <button class="btn btn-secondary" onclick="closeConfirmModal()">Periksa Kembali</button>
+            <button class="btn btn-success" onclick="confirmFinishExam()">Ya, Kumpulkan</button>
+        </div>
+    </div>
+</div>
+
+<script>
+const rawQuestions = [
+    // A. SOAL PILIHAN GANDA (1 - 40) - INFORMATIKA KELAS VII SMP
+    {
+        q: "Perangkat keras komputer yang berfungsi untuk memasukkan data ke dalam sistem komputer disebut....",
+        opts: [
+            "Perangkat input",
+            "Perangkat output",
+            "Perangkat proses",
+            "Perangkat penyimpanan"
+        ],
+        ans: "Perangkat input"
+    },
+    {
+        q: "Berikut ini yang merupakan contoh perangkat keras masukan (input device) adalah....",
+        opts: ["Monitor", "Printer", "Keyboard", "Speaker"],
+        ans: "Keyboard"
+    },
+    {
+        q: "Komponen fisik komputer yang disebut sebagai otak komputer adalah....",
+        opts: ["RAM", "Harddisk", "Monitor", "CPU"],
+        ans: "CPU"
+    },
+    {
+        q: "Perangkat keras yang berfungsi untuk menampilkan hasil pengolahan data dalam bentuk visual adalah....",
+        opts: ["Keyboard", "Monitor", "Mouse", "Scanner"],
+        ans: "Monitor"
+    },
+    {
+        q: "Media penyimpanan data yang bersifat sementara dan akan hilang saat komputer dimatikan adalah....",
+        opts: ["Harddisk", "SSD", "RAM", "Flashdisk"],
+        ans: "RAM"
+    },
+    {
+        q: "Perangkat keras yang digunakan untuk mencetak dokumen dari komputer ke media kertas disebut....",
+        opts: ["Scanner", "Printer", "Plotter", "Monitor"],
+        ans: "Printer"
+    },
+    {
+        q: "Perangkat lunak yang bertugas untuk mengatur dan mengendalikan perangkat keras serta memberikan antarmuka bagi pengguna disebut....",
+        opts: [
+            "Sistem Operasi",
+            "Program Aplikasi",
+            "Bahasa Pemrograman",
+            "Utility Program"
+        ],
+        ans: "Sistem Operasi"
+    },
+    {
+        q: "Contoh sistem operasi yang populer digunakan pada komputer pribadi saat ini adalah....",
+        opts: [
+            "Microsoft Word",
+            "Microsoft Excel",
+            "Windows 10",
+            "Google Chrome"
+        ],
+        ans: "Windows 10"
+    },
+    {
+        q: "Perangkat lunak yang digunakan untuk menjelajahi internet disebut....",
+        opts: [
+            "Spreadsheet",
+            "Web Browser",
+            "Word Processor",
+            "Presentation Software"
+        ],
+        ans: "Web Browser"
+    },
+    {
+        q: "Perangkat keras yang digunakan untuk menyimpan data secara permanen dalam kapasitas besar di dalam komputer adalah....",
+        opts: ["Harddisk", "RAM", "ROM", "Cache Memory"],
+        ans: "Harddisk"
+    },
+    {
+        q: "Program aplikasi yang dikembangkan oleh Microsoft khusus untuk keperluan presentasi adalah....",
+        opts: [
+            "Microsoft Word",
+            "Microsoft Excel",
+            "Microsoft PowerPoint",
+            "Microsoft Access"
+        ],
+        ans: "Microsoft PowerPoint"
+    },
+    {
+        q: "Langkah pertama untuk membuka program Microsoft PowerPoint pada Windows biasanya melalui menu....",
+        opts: ["Start", "File Explorer", "Settings", "Control Panel"],
+        ans: "Start"
+    },
+    {
+        q: "Lembar kerja dalam Microsoft PowerPoint disebut dengan istilah....",
+        opts: ["Document", "Sheet", "Slide", "Layer"],
+        ans: "Slide"
+    },
+    {
+        q: "Ekstensi standar untuk file presentasi yang dibuat menggunakan Microsoft PowerPoint versi 2007 ke atas adalah....",
+        opts: [".docx", ".xlsx", ".pptx", ".pdf"],
+        ans: ".pptx"
+    },
+    {
+        q: "Tombol pintas (shortcut) pada keyboard yang digunakan untuk memulai presentasi dari slide pertama adalah....",
+        opts: ["F1", "F5", "Ctrl + P", "Shift + F5"],
+        ans: "F5"
+    },
+    {
+        q: "Untuk memulai presentasi dari slide yang sedang aktif atau dipilih, tombol yang ditekan adalah....",
+        opts: ["F5", "Ctrl + S", "Shift + F5", "Alt + F4"],
+        ans: "Shift + F5"
+    },
+    {
+        q: "Efek visual yang terjadi ketika berpindah dari satu slide ke slide berikutnya dalam presentasi disebut....",
+        opts: ["Animation", "Transition", "Layout", "Design"],
+        ans: "Transition"
+    },
+    {
+        q: "Fitur yang digunakan untuk memberikan efek gerak pada objek tertentu (seperti teks atau gambar) di dalam sebuah slide disebut....",
+        opts: ["Transition", "Animation", "Theme", "Word Art"],
+        ans: "Animation"
+    },
+    {
+        q: "Tab menu yang digunakan untuk mengubah latar belakang dan tampilan visual keseluruhan slide secara otomatis adalah....",
+        opts: ["Home", "Insert", "Design", "Review"],
+        ans: "Design"
+    },
+    {
+        q: "Perintah untuk menyisipkan gambar dari komputer ke dalam slide PowerPoint berada pada tab....",
+        opts: ["Home", "Insert", "View", "Transitions"],
+        ans: "Insert"
+    },
+    {
+        q: "Untuk mengakhiri tampilan presentasi sebelum slide terakhir tercapai, kita dapat menekan tombol....",
+        opts: ["Enter", "Space", "Esc", "Tab"],
+        ans: "Esc"
+    },
+    {
+        q: "Fasilitas dalam PowerPoint yang digunakan untuk melihat seluruh slide dalam bentuk miniatur dalam satu layar disebut....",
+        opts: ["Slide Show", "Reading View", "Slide Sorter", "Outline View"],
+        ans: "Slide Sorter"
+    },
+    {
+        q: "Kombinasi tombol keyboard untuk menyimpan file presentasi adalah....",
+        opts: ["Ctrl + C", "Ctrl + V", "Ctrl + S", "Ctrl + Z"],
+        ans: "Ctrl + S"
+    },
+    {
+        q: "Bagian yang digunakan untuk mengetikkan catatan tambahan bagi presenter yang tidak terlihat oleh penonton disebut....",
+        opts: ["Placeholder", "Notes Pane", "Slide Area", "Ribbon"],
+        ans: "Notes Pane"
+    },
+    {
+        q: "Untuk menambahkan slide baru dalam presentasi, perintah yang digunakan adalah....",
+        opts: ["New Slide", "New File", "Reset Slide", "Layout Slide"],
+        ans: "New Slide"
+    },
+    {
+        q: "Kotak yang memiliki garis putus-putus pada slide yang berfungsi untuk menampung teks, gambar, atau tabel disebut....",
+        opts: ["Textbox", "Frame", "Placeholder", "Shape"],
+        ans: "Placeholder"
+    },
+    {
+        q: "Format file yang dipilih jika ingin menyimpan presentasi PowerPoint agar dapat dibuka langsung sebagai tampilan presentasi tanpa masuk ke editor adalah....",
+        opts: [
+            "PowerPoint Presentation (.pptx)",
+            "PowerPoint Show (.ppsx)",
+            "PowerPoint Template (.potx)",
+            "PDF Document (.pdf)"
+        ],
+        ans: "PowerPoint Show (.ppsx)"
+    },
+    {
+        q: "Perangkat keras yang digunakan untuk menggerakkan kursor atau menunjuk objek di layar monitor adalah....",
+        opts: ["Joystick", "Mouse", "Touchpad", "Mouse dan Touchpad"],
+        ans: "Mouse dan Touchpad"
+    },
+    {
+        q: "Perangkat lunak yang bersifat gratis untuk digunakan dan didistribuskan disebut....",
+        opts: ["Commercial Software", "Freeware", "Shareware", "Malware"],
+        ans: "Freeware"
+    },
+    {
+        q: "Tab menu yang digunakan untuk mengatur durasi waktu otomatis perpindahan slide adalah....",
+        opts: ["Transitions", "Animations", "Slide Show", "Insert"],
+        ans: "Transitions"
+    },
+    {
+        q: "Komponen fisik pada komputer yang dapat dilihat dan disentuh secara langsung disebut....",
+        opts: [
+            "Perangkat lunak",
+            "Perangkat keras",
+            "Sistem operasi",
+            "Brainware"
+        ],
+        ans: "Perangkat keras"
+    },
+    {
+        q: "Perangkat keras yang berfungsi sebagai pusat pemrosesan data dan otak dari komputer adalah....",
+        opts: ["CPU", "RAM", "Monitor", "Keyboard"],
+        ans: "CPU"
+    },
+    {
+        q: "Manakah di bawah ini yang termasuk dalam kategori perangkat masukan (input device)?",
+        opts: ["Printer", "Speaker", "Mouse", "Monitor"],
+        ans: "Mouse"
+    },
+    {
+        q: "Perangkat keras yang digunakan untuk mencetak hasil pekerjaan dari komputer ke dalam bentuk kertas adalah....",
+        opts: ["Scanner", "Plotter", "LCD Proyektor", "Printer"],
+        ans: "Printer"
+    },
+    {
+        q: "Singkatan dari RAM adalah....",
+        opts: [
+            "Random Access Memory",
+            "Read Access Memory",
+            "Read Always Memory",
+            "Random Always Memory"
+        ],
+        ans: "Random Access Memory"
+    },
+    {
+        q: "Perangkat keras yang berfungsi untuk menampilkan visual atau gambar dari komputer ke pengguna adalah....",
+        opts: ["Harddisk", "Monitor", "Microphone", "Scanner"],
+        ans: "Monitor"
+    },
+    {
+        q: "Media penyimpanan data permanen di dalam komputer yang memiliki kapasitas besar adalah....",
+        opts: ["RAM", "ROM", "Harddisk", "Flashdisk"],
+        ans: "Harddisk"
+    },
+    {
+        q: "Perangkat keras yang digunakan untuk memasukkan perintah berupa huruf dan angka adalah....",
+        opts: ["Keyboard", "Mouse", "Joystick", "Trackpad"],
+        ans: "Keyboard"
+    },
+    {
+        q: "Fungsi utama dari perangkat keras bernama Scanner adalah....",
+        opts: [
+            "Mengeluarkan suara",
+            "Mencetak dokumen",
+            "Menyalin dokumen fisik menjadi data digital",
+            "Menghubungkan ke internet"
+        ],
+        ans: "Menyalin dokumen fisik menjadi data digital"
+    },
+    {
+        q: "Perangkat keras yang menghubungkan semua komponen komputer agar dapat berkomunikasi satu sama lain adalah....",
+        opts: ["Power Supply", "Motherboard", "Processor", "Casing"],
+        ans: "Motherboard"
+    },
+
+    // B. SOAL ESSAI YANG DIKONVERSI KE PILIHAN GANDA (41 - 45)
+    {
+        q: "Perangkat lunak yang bertugas untuk mengontrol dan mengelola perangkat keras komputer adalah....",
+        opts: [
+            "Sistem Operasi",
+            "Perangkat Lunak Aplikasi",
+            "Bahasa Pemrograman",
+            "Driver Grafis"
+        ],
+        ans: "Sistem Operasi"
+    },
+    {
+        q: "Contoh sistem operasi yang paling populer untuk komputer pribadi adalah....",
+        opts: [
+            "Microsoft Windows",
+            "Microsoft Office",
+            "Google Chrome",
+            "Adobe Photoshop"
+        ],
+        ans: "Microsoft Windows"
+    },
+    {
+        q: "Program aplikasi yang digunakan untuk menjelajahi internet adalah....",
+        opts: [
+            "Web Browser",
+            "Word Processor",
+            "Spreadsheet",
+            "Media Player"
+        ],
+        ans: "Web Browser"
+    },
+    {
+        q: "Perangkat lunak yang dibuat khusus untuk melindungi komputer dari serangan program jahat disebut....",
+        opts: ["Antivirus", "Sistem Operasi", "Browser", "Compiler"],
+        ans: "Antivirus"
+    },
+    {
+        q: "Microsoft Word, Microsoft Excel, dan Microsoft PowerPoint termasuk ke dalam kategori....",
+        opts: [
+            "Perangkat Lunak Aplikasi",
+            "Sistem Operasi",
+            "Perangkat Keras",
+            "Bahasa Pemrograman"
+        ],
+        ans: "Perangkat Lunak Aplikasi"
+    }
+];
+
+let examQuestions = [];
+let currentIndex = 0;
+let userAnswers = {};
+let studentName = "";
+let studentClass = "";
+
+// Algoritma Fisher-Yates untuk mengacak urutan array
+function shuffleArray(array) {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+// Acak soal dan acak opsi jawaban setiap kali dimulai
+function prepareRandomizedQuestions() {
+    const shuffledQuestions = shuffleArray(rawQuestions);
+    examQuestions = shuffledQuestions.map(item => ({
+        q: item.q,
+        opts: shuffleArray(item.opts),
+        ans: item.ans
+    }));
+}
+
+function startExam() {
+    const nameInput = document.getElementById("student-name").value.trim();
+    const classInput = document.getElementById("student-class").value.trim();
+    const alertBox = document.getElementById("form-alert");
+
+    if (!nameInput || !classInput) {
+        alertBox.innerText = "Harap isi Nama Lengkap dan Kelas terlebih dahulu sebelum memulai.";
+        alertBox.style.display = "block";
+        return;
+    }
+
+    alertBox.style.display = "none";
+    studentName = nameInput;
+    studentClass = classInput;
+
+    // Reset state & acak ulang soal
+    currentIndex = 0;
+    userAnswers = {};
+    prepareRandomizedQuestions();
+
+    document.getElementById("student-badge").innerText = `${studentName} (${studentClass})`;
+    document.getElementById("start-screen").style.display = "none";
+    document.getElementById("result-body").style.display = "none";
+    document.getElementById("quiz-body").style.display = "block";
+
+    showQuestion();
+}
+
+function restartExam() {
+    currentIndex = 0;
+    userAnswers = {};
+    prepareRandomizedQuestions();
+
+    document.getElementById("result-body").style.display = "none";
+    document.getElementById("quiz-body").style.display = "block";
+    showQuestion();
+}
+
+function showQuestion() {
+    const item = examQuestions[currentIndex];
+
+    document.getElementById("progress-text").innerText = `Soal ${currentIndex + 1} dari ${examQuestions.length}`;
+    document.getElementById("question-text").innerHTML = item.q;
+
+    const answerArea = document.getElementById("answer-area");
+    answerArea.innerHTML = "";
+
+    const ul = document.createElement("ul");
+    ul.className = "options";
+    const labels = ["A", "B", "C", "D", "E"];
+
+    item.opts.forEach((opt, idx) => {
+        const isChecked = userAnswers[currentIndex] === opt ? "checked" : "";
+        const li = document.createElement("li");
+        li.innerHTML = `
+            <label>
+                <input type="radio" name="pg_option" value="${opt}" ${isChecked} onchange="saveAnswer(this.value)">
+                <span><b>${labels[idx]}.</b> ${opt}</span>
+            </label>
+        `;
+        ul.appendChild(li);
+    });
+    answerArea.appendChild(ul);
+
+    document.getElementById("prev-btn").disabled = currentIndex === 0;
+    const nextBtn = document.getElementById("next-btn");
+    if (currentIndex === examQuestions.length - 1) {
+        nextBtn.innerText = "Selesai & Kumpulkan";
+        nextBtn.classList.add("btn-success");
+    } else {
+        nextBtn.innerText = "Selanjutnya";
+        nextBtn.classList.remove("btn-success");
+    }
+}
+
+function saveAnswer(val) {
+    userAnswers[currentIndex] = val;
+}
+
+function nextQuestion() {
+    if (currentIndex < examQuestions.length - 1) {
+        currentIndex++;
+        showQuestion();
+    } else {
+        const unanswered = examQuestions.filter((_, idx) => !userAnswers[idx] || userAnswers[idx].trim() === "").length;
+        const confirmText = unanswered > 0
+            ? `Masih ada ${unanswered} soal yang belum dijawab. Apakah Anda yakin ingin mengumpulkan sekarang?`
+            : "Apakah Anda yakin ingin mengakhiri dan mengumpulkan sekarang?";
+        document.getElementById("confirm-modal-text").innerText = confirmText;
+        document.getElementById("confirm-modal-backdrop").style.display = "flex";
+    }
+}
+
+function closeConfirmModal() {
+    document.getElementById("confirm-modal-backdrop").style.display = "none";
+}
+
+function confirmFinishExam() {
+    closeConfirmModal();
+    finishExam();
+}
+
+function prevQuestion() {
+    if (currentIndex > 0) {
+        currentIndex--;
+        showQuestion();
+    }
+}
+
+function finishExam() {
+    let correctCount = 0;
+
+    examQuestions.forEach((item, idx) => {
+        if (userAnswers[idx] === item.ans) {
+            correctCount++;
+        }
+    });
+
+    const score = Math.round((correctCount / examQuestions.length) * 100);
+    const passed = score >= 75;
+
+    document.getElementById("quiz-body").style.display = "none";
+    document.getElementById("result-body").style.display = "block";
+    document.getElementById("result-student-info").innerText = `Nama: ${studentName} | Kelas: ${studentClass}`;
+    document.getElementById("final-score").innerText = score;
+    document.getElementById("final-score").style.color = passed ? "var(--success)" : "var(--danger)";
+
+    const statusBadge = document.getElementById("kktp-status");
+    statusBadge.innerText = passed ? "TUNTAS (KKTP ≥ 75)" : "BELUM TUNTAS (KKTP 75)";
+    statusBadge.style.backgroundColor = passed ? "#dcfce7" : "#fee2e2";
+    statusBadge.style.color = passed ? "#166534" : "#991b1b";
+
+    document.getElementById("score-summary").innerText = `Benar ${correctCount} dari ${examQuestions.length} soal.`;
+}
+</script>
+
+</body>
+</html>
